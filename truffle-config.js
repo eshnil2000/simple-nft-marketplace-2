@@ -2,6 +2,7 @@ require('dotenv').config();
 
 const HDWalletProvider = require('truffle-hdwallet-provider-privkey');
 const privateKeys = process.env.PRIVATE_KEYS || "";
+const Web3 = require('web3');
 
 module.exports = {
 
@@ -9,6 +10,10 @@ module.exports = {
     development: {
       host: "0.0.0.0",
       port: 8545,
+      network_id: "*" //match any network id
+    },
+    inteon: {
+      provider: new Web3.providers.HttpProvider('https://inteon.dappsuni.com'),
       network_id: "*" //match any network id
     },
     /*rinkeby: {
