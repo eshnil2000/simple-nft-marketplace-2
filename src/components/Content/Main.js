@@ -1,11 +1,13 @@
 import { useContext  } from 'react';
+import  '@google/model-viewer/dist/model-viewer';
 
 import MintForm from './MintNFT/MintForm';
 import NFTCollection from './NFTCollection/NFTCollection';
 import CollectionContext from '../../store/collection-context';
 import MarketplaceContext from '../../store/marketplace-context';
 import Spinner from '../Layout/Spinner';
-import logo from '../../img/logo2.PNG'
+//import logo from '../../img/logo2.PNG'
+import logo from '../../img/inteon.gif';
 
 const Main = () => {
   const collectionCtx = useContext(CollectionContext);

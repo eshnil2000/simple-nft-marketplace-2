@@ -1,4 +1,5 @@
 import { useContext, useRef, createRef } from 'react';
+import  '@google/model-viewer/dist/model-viewer';
 
 import web3 from '../../../connection/web3';
 import Web3Context from '../../../store/web3-context';
@@ -72,6 +73,8 @@ const NFTCollection = () => {
               <h5 className="card-title">{NFT.title}</h5>
             </div>
             <img src={`https://ipfs.infura.io/ipfs/${NFT.img}`} className="card-img-bottom" alt={`NFT ${key}`} />                         
+            <model-viewer className="card-img-bottom"auto-rotate="true" autoplay="true" camera-controls="true" class="ModelScene--viewer" src="https://openseauserdata.com/files/f58b66557863221e6c95cf483590a720.glb" ar-status="not-presenting"></model-viewer>
+            
             <p className="fw-light fs-6">{`${owner.substr(0,7)}...${owner.substr(owner.length - 7)}`}</p>
             {index !== -1 ?
               owner !== web3Ctx.account ?
