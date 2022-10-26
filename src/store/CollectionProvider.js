@@ -2,6 +2,13 @@ import { useReducer } from 'react';
 
 import CollectionContext from './collection-context';
 
+const projectId='xxxx';
+const projectSecret='xxxx';
+const auth = 'Basic ' + Buffer.from(projectId + ':' + projectSecret).toString('base64');
+
+let headers = new Headers();
+headers.set('Authorization', auth);
+
 const defaultCollectionState = {
   contract: null,
   totalSupply: null,
@@ -100,13 +107,25 @@ const CollectionProvider = props => {
 
     for(let i = 0; i < totalSupply; i++) {
       const hash = await contract.methods.tokenURIs(i).call();
+      var params = {
+	'arg':hash
+	}
       try {
-        const response = await fetch(`https://ipfs.infura.io/ipfs/${hash}?clear`);
+        var options = {
+    method: 'POST',
+    body: JSON.stringify( params ),
+    headers: {headers}  
+};
+	var infuraAPI= `https://nilesh.infura-ipfs.io/ipfs/`+hash;
+        //const response = await fetch(`https://ipfs.infura.io:5001`,options);
+	const response = await fetch(infuraAPI);
         if(!response.ok) {
           throw new Error('Something went wrong');
         }
+	console.log('infuraAPI ' + infuraAPI);
 
         const metadata = await response.json();
+	console.log('metadata ', metadata);
         const owner = await contract.methods.ownerOf(i + 1).call();
 
         collection = [{
@@ -125,8 +144,22 @@ const CollectionProvider = props => {
   const updateCollectionHandler = async(contract, id, owner) => {
     let NFT;
     const hash = await contract.methods.tokenURI(id).call();
+var params = {
+        'arg':hash
+        };
+var options = {
+    method: 'POST',
+    body: JSON.stringify( params ),
+    headers: {headers}
+};
+
     try {
-      const response = await fetch(`https://ipfs.infura.io/ipfs/${hash}?clear`);
+	 var infuraAPI= `https://nilesh.infura-ipfs.io/ipfs/`+hash;
+
+      //const response = await fetch(`https://ipfs.infura.io:5001`,options);
+	const response = await fetch(infuraAPI);
+	//const response = await fetch(`https://nilesh.infura-ipfs.io/ipfs/QmXhKxWocoMEB5ssuJZHiZNXSgsJJmdaLSNT5ZUHD4qN1T`);
+
       if(!response.ok) {
         throw new Error('Something went wrong');      }
 

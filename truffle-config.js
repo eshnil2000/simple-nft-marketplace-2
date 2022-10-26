@@ -14,7 +14,8 @@ module.exports = {
     },
     inteon: {
       provider: new Web3.providers.HttpProvider('https://inteon.dappsuni.com'),
-      network_id: "*" //match any network id
+      network_id: "*", //match any network id,
+      disableConfirmationListener: true
     },
     /*rinkeby: {
       provider: function() {

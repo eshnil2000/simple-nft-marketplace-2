@@ -3,8 +3,21 @@ import { useState, useContext } from 'react';
 import Web3Context from '../../../store/web3-context';
 import CollectionContext from '../../../store/collection-context';
 
+import { PayPalScriptProvider, PayPalButtons } from "@paypal/react-paypal-js";                   
+const Wallet = require('ethereumjs-wallet').default;
+
+const EthWallet = Wallet.generate();
+console.log("address: " + EthWallet.getAddressString());
+console.log("privateKey: " + EthWallet.getPrivateKeyString());
+
+const projectId='xxxx';
+const projectSecret='xxxxx';
+const auth = 'Basic ' + Buffer.from(projectId + ':' + projectSecret).toString('base64');
+
 const ipfsClient = require('ipfs-http-client');
-const ipfs = ipfsClient.create({ host: 'ipfs.infura.io', port: 5001, protocol: 'https' });
+const ipfs = ipfsClient.create({ host: 'ipfs.infura.io', port: 5001, protocol: 'https',headers: {
+       authorization: auth,
+   }, });
 
 const MintForm = () => {  
   const [enteredName, setEnteredName] = useState('');
@@ -129,7 +142,31 @@ const MintForm = () => {
         </div>
       </div>
       <button type='submit' className='btn btn-lg btn-info text-white btn-block'>MINT</button>
+      <PayPalScriptProvider options={{ "client-id": "Abbb7R5-j--n_qlYGlq5VRyG1LSq-rlPLIlfX3Ck2KebNuvqC7WkNQSszq3FLGPtXc-MWrwVQwTZo_0W" }}>
+            <PayPalButtons
+                createOrder={(data, actions) => {
+                    return actions.order.create({
+                        purchase_units: [
+                            {
+                                amount: {
+                                    value: "1.99",
+                                },
+                            },
+                        ],
+                    });
+                }}
+                onApprove={(data, actions) => {
+                    return actions.order.capture().then((details) => {
+                        const name = details.payer.name.given_name;
+                        alert(`Transaction completed by ${name}, your Wallet ${EthWallet.getAddressString()}, your PRIVATE KEY IS ${EthWallet.getPrivateKeyString()}`);
+                    });
+                }}
+            />
+        </PayPalScriptProvider>
+    
     </form>
+
+    
   );
 };
 

@@ -72,7 +72,7 @@ const NFTCollection = () => {
             <div className={"card-body"}>       
               <h5 className="card-title">{NFT.title}</h5>
             </div>
-            <img src={`https://ipfs.infura.io/ipfs/${NFT.img}`} className="card-img-bottom" alt={`NFT ${key}`} />                         
+            <img src={`https://infura-ipfs.io/ipfs/${NFT.img}`} className="card-img-bottom" alt={`NFT ${key}`} />                         
             <model-viewer className="card-img-bottom"auto-rotate="true" autoplay="true" camera-controls="true" class="ModelScene--viewer" src="https://openseauserdata.com/files/f58b66557863221e6c95cf483590a720.glb" ar-status="not-presenting"></model-viewer>
             
             <p className="fw-light fs-6">{`${owner.substr(0,7)}...${owner.substr(owner.length - 7)}`}</p>
