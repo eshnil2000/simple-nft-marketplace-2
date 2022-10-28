@@ -2,8 +2,8 @@ import { useReducer } from 'react';
 
 import CollectionContext from './collection-context';
 
-const projectId='xxxx';
-const projectSecret='xxxx';
+const projectId=process.env.REACT_APP_PROJECT_ID;
+const projectSecret=process.env.REACT_APP_API_KEY_SECRET;
 const auth = 'Basic ' + Buffer.from(projectId + ':' + projectSecret).toString('base64');
 
 let headers = new Headers();

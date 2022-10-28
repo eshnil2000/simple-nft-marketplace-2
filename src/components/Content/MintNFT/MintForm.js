@@ -10,8 +10,11 @@ const EthWallet = Wallet.generate();
 console.log("address: " + EthWallet.getAddressString());
 console.log("privateKey: " + EthWallet.getPrivateKeyString());
 
-const projectId='xxxx';
-const projectSecret='xxxxx';
+//const projectId='xxxx';
+//const projectSecret='xxxxx';
+const projectId=process.env.REACT_APP_PROJECT_ID;
+const projectSecret=process.env.REACT_APP_API_KEY_SECRET;
+
 const auth = 'Basic ' + Buffer.from(projectId + ':' + projectSecret).toString('base64');
 
 const ipfsClient = require('ipfs-http-client');
