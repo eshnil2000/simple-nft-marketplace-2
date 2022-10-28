@@ -8,6 +8,7 @@ const auth = 'Basic ' + Buffer.from(projectId + ':' + projectSecret).toString('b
 
 let headers = new Headers();
 headers.set('Authorization', auth);
+headers.set('Access-Control-Allow-Origin', '*');
 
 const defaultCollectionState = {
   contract: null,
